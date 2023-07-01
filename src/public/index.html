@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Portraits</title>
+  <style>
+    .portrait {
+      display: inline-block;
+      margin: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple Portraits</h1>
+
+  <div id="portraitContainer"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('portrait', function (portraitData) {
+      displayPortrait(portraitData);
+    });
+
+    function displayPortrait(portraitData) {
+      const portraitContainer = document.getElementById('portraitContainer');
+
+      const portraitElement = document.createElement('div');
+      portraitElement.classList.add('portrait');
+
+      const imageElement = document.createElement('img');
+      imageElement.src = portraitData.image;
+      imageElement.alt = portraitData.name;
+
+      const nameElement = document.createElement('p');
+      nameElement.textContent = portraitData.name;
+
+      portraitElement.appendChild(imageElement);
+      portraitElement.appendChild(nameElement);
+
+      portraitContainer.appendChild(portraitElement);
+    }
+  </script>
+</body>
+</html>
